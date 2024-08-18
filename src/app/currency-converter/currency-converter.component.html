@@ -6,9 +6,12 @@
       <h1>Select a Currency Pair to Convert</h1>
       } @if (targetLabel && baseLabel) {
       <p>1 {{ baseLabel }} equals</p>
-      <h1>{{ conversionRate.toLocaleString() }} {{ targetLabel }}</h1>
+      <h1>
+        {{ conversionRate.toLocaleString() }} {{ targetLabel }} ({{
+          formattedDate
+        }})
+      </h1>
       }
-      <p>{{ formattedDate }}</p>
       <app-currency-form
         (formChanged)="updateForm($event)"
         [convertedAmount]="convertedAmount"
@@ -16,7 +19,7 @@
       />
     </div>
     <div sui-container class="chart__wrapper">
-      <app-line-chart />
+      <app-line-chart [historySet]="historySet" />
     </div>
   </div>
 </main>

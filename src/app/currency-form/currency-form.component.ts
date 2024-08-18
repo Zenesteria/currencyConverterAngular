@@ -45,8 +45,8 @@ export class CurrencyFormComponent {
   ngOnInit(): void {
     // this.CurrencyData.fetchCurrenyData().subscribe((res) => console.log(res));
     this.currencyForm = new FormGroup({
-      baseCode: new FormControl('EUR', [Validators.required]),
-      targetCode: new FormControl('NGN', [Validators.required]),
+      baseCode: new FormControl('', [Validators.required]),
+      targetCode: new FormControl('', [Validators.required]),
       amount: new FormControl(1, [Validators.required]),
     });
   }

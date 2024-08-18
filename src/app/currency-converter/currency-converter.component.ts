@@ -28,6 +28,7 @@ export class CurrencyConverterComponent implements OnInit {
   formattedDate!: string;
   convertedAmount = 0;
   conversionRate!: number;
+  historySet!: number[];
   isLoading = false;
 
   currencyForm!: FormGroup;
@@ -41,10 +42,10 @@ export class CurrencyConverterComponent implements OnInit {
     amount: number;
   }) {
     this.isLoading = true;
-
     const baseCode = currencyCodeDict[baseLabel];
     const targetCode = currencyCodeDict[targetLabel];
     console.log(targetCode, baseCode);
+
     this.CurrencyData.convert(baseCode, targetCode, amount).subscribe(
       (res: { conversion_rate: number; conversion_result: number }) => {
         this.isLoading = false;
@@ -53,6 +54,18 @@ export class CurrencyConverterComponent implements OnInit {
         this.conversionRate = res.conversion_rate;
         this.convertedAmount = res.conversion_result;
         console.log(res);
+        // let days = [1, 2, 3, 4, 5, 6, 7];
+        // days.map((day) => {
+        //   this.CurrencyData.currencyHistory(
+        //     baseCode,
+        //     targetCode,
+        //     day
+        //   ).subscribe((res) => {
+        //     let data: any = res;
+        //     this.historySet.push(data['conversion_rates'][targetCode]);
+        //     console.log(res)
+        //   });
+        // });
       }
     );
   }

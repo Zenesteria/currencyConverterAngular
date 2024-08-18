@@ -16,6 +16,24 @@ export default class CurrencyService {
     'Nigerian Naira': 'NGN',
   };
 
+  currencyHistory(
+    baseCode: string,
+    targetCode: string,
+    day: number
+  ): Observable<any> {
+    let today = new Date();
+    let aYearAgo = new Date(today.getTime() - 365 * 24 * 60 * 60 * 1000);
+    const endpoint = `https://v6.exchangerate-api.com/v6/${
+      this.api_key
+    }/history/${baseCode}/${aYearAgo.getFullYear()}/${aYearAgo.getMonth()}/${day}`;
+    return this.http.get(endpoint);
+
+    // subscribe((res) => {
+    //       let data: any = res;
+    //       dataset.push(data['conversion_rates'][targetCode]);
+    //     });
+  }
+
   convert(
     base_code: string,
     target_code: string,
