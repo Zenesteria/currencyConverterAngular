@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {NgxSemanticModule} from 'ngx-semantic'
+import { environment } from '../environments/environment.prod';
 @Component({
   selector: 'app-root',
   standalone: true,
