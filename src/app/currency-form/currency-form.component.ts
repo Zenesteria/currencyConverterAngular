@@ -39,7 +39,7 @@ export class CurrencyFormComponent {
   ];
   currencyForm!: FormGroup;
   @Input({ required: true }) convertedAmount!: number;
-  @Input({required:true}) isLoading!:boolean;
+  @Input({ required: true }) isLoading!: boolean;
   @Output() formChanged = new EventEmitter();
   convert() {}
   ngOnInit(): void {
@@ -47,24 +47,45 @@ export class CurrencyFormComponent {
     this.currencyForm = new FormGroup({
       baseCode: new FormControl('', [Validators.required]),
       targetCode: new FormControl('', [Validators.required]),
-      amount: new FormControl(1, [Validators.required]),
+      amount: new FormControl(0, [Validators.required, Validators.min(1)]),
     });
   }
 
-  emitLabel(value: { targetLabel: string; baseLabel: string, amount:number }) {
+  emitLabel(value: { targetLabel: string; baseLabel: string; amount: number }) {
     this.formChanged.emit(value);
   }
 
+  getErrorMessage(controlName: string, errorType: string) {
+    if (
+      this.currencyForm.get(controlName)?.invalid &&
+      this.currencyForm.get(controlName)?.touched
+    ) {
+      if (this.currencyForm.get(controlName)?.errors?.[errorType]) {
+        switch (errorType) {
+          case 'required':
+            return `Please Enter your ${controlName
+              .charAt(0)
+              .toUpperCase()}${controlName.slice(1)}`;
+          default:
+            return '';
+        }
+      }
+    }
+    return '';
+  }
+
   onSubmit() {
-    console.log(this.currencyForm.value);
-    this.emitLabel({
-      baseLabel: this.currencies.filter(
-        (currency) => currency.value == this.currencyForm.value.baseCode
-      )[0].text,
-      targetLabel: this.currencies.filter(
-        (currency) => currency.value == this.currencyForm.value.targetCode
-      )[0].text,
-      amount:this.currencyForm.value.amount
-    });
+    if (this.currencyForm.valid) {
+      console.log(this.currencyForm.value);
+      this.emitLabel({
+        baseLabel: this.currencies.filter(
+          (currency) => currency.value == this.currencyForm.value.baseCode
+        )[0].text,
+        targetLabel: this.currencies.filter(
+          (currency) => currency.value == this.currencyForm.value.targetCode
+        )[0].text,
+        amount: this.currencyForm.value.amount,
+      });
+    }
   }
 }

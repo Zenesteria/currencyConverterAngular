@@ -1,11 +1,12 @@
 <form sui-form [formGroup]="currencyForm" (ngSubmit)="onSubmit()">
   <div suiFormFields>
     <div class="" suiFormField>
-      <input type="number" formControlName="amount" />
+      <input type="number" name="amount" formControlName="amount" />
     </div>
     <sui-select
       suiPlaceholder="Select a Base Currency"
       formControlName="baseCode"
+      name="baseCode"
       [suiOptions]="currencies"
     />
   </div>
@@ -21,8 +22,21 @@
     <sui-select
       suiPlaceholder="Select a Target Currency"
       formControlName="targetCode"
+      name="targetCode"
       [suiOptions]="currencies"
     />
+    @if (getErrorMessage('targetCode', 'required')) {
+    <p class="ui pointing basic red label">
+      {{ getErrorMessage("targetCode", "required") }}
+    </p>
+    }
   </div>
-  <button sui-button type="submit" [suiLoading]="isLoading">Convert</button>
+  <button
+    [disabled]="this.currencyForm.invalid"
+    sui-button
+    type="submit"
+    [suiLoading]="isLoading"
+  >
+    Convert
+  </button>
 </form>
