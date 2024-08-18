@@ -2,21 +2,18 @@
   <h1>Angular Currency Converter</h1>
   <div class="converter__wrapper">
     <div class="data__wrapper">
-      <p>1 Nigerian Naira equals</p>
-      <h1>0.00063 United States Dollar</h1>
-      <p>18th Aug, 01:08 UTC - Disclaimer</p>
-      <div class="input__wrapper">
-        <div class="" sui-input>
-          <input type="text" value="1" />
-        </div>
-        <sui-select suiPlaceholder="Currency" [suiOptions]="currencies" />
-      </div>
-      <div class="input__wrapper">
-        <div class="" sui-input>
-          <input type="text" value="1" />
-        </div>
-        <sui-select suiPlaceholder="Currency" [suiOptions]="currencies" />
-      </div>
+      @if (!targetLabel && !baseLabel) {
+      <h1>Select a Currency Pair to Convert</h1>
+      } @if (targetLabel && baseLabel) {
+      <p>1 {{ baseLabel }} equals</p>
+      <h1>{{ conversionRate.toLocaleString() }} {{ targetLabel }}</h1>
+      }
+      <p>{{ formattedDate }}</p>
+      <app-currency-form
+        (formChanged)="updateForm($event)"
+        [convertedAmount]="convertedAmount"
+        [isLoading]="isLoading"
+      />
     </div>
     <div sui-container class="chart__wrapper">
       <app-line-chart />

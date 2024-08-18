@@ -1,0 +1,28 @@
+<form sui-form [formGroup]="currencyForm" (ngSubmit)="onSubmit()">
+  <div suiFormFields>
+    <div class="" suiFormField>
+      <input type="number" formControlName="amount" />
+    </div>
+    <sui-select
+      suiPlaceholder="Currency"
+      formControlName="baseCode"
+      [suiOptions]="currencies"
+    />
+  </div>
+  <div suiFormFields suiWidth="two">
+    <div class="" suiFormField>
+      <input
+        disabled
+        type="number"
+        placeholder="converted amount"
+        [value]="convertedAmount"
+      />
+    </div>
+    <sui-select
+      suiPlaceholder="Currency"
+      formControlName="targetCode"
+      [suiOptions]="currencies"
+    />
+  </div>
+  <button sui-button type="submit" [suiLoading]="isLoading">Convert</button>
+</form>
