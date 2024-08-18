@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export default class CurrencyService {
   constructor(private http: HttpClient) {}
-  private readonly api_key = process.env['EX_API_KEY'];
+  private readonly api_key = environment.EX_API_KEY;
   currencyCodeDict = {
     'United States Dollar': 'USD',
     'European Euro': 'EUR',
